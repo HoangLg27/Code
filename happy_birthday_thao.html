@@ -1,0 +1,75 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Happy Birthday Chị Thảo</title>
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      overflow: hidden;
+      color: #0f0;
+      font-family: monospace;
+      text-align: center;
+      height: 100vh;
+    }
+    canvas { display: block; }
+    #message {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #ff4081;
+      font-size: 2em;
+      text-shadow: 0 0 10px #ff4081;
+      white-space: pre-line;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="matrix"></canvas>
+  <div id="message">
+    🎉 Happy birthday to Thao!
+Chúc chị lúc nào cũng như gái 18+ 💖
+  </div>
+  <script>
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    const cols = Math.floor(width / 20);
+    const rows = Math.floor(height / 20);
+    const chars = "アカサタナハマヤラワガザダバパイキシチニヒミリギジヂビピ0123456789@#$%^&*()*&^%";
+    const letters = chars.split("");
+    const fontSize = 20;
+    const drops = Array(cols).fill(1);
+
+    function draw() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+      ctx.fillRect(0, 0, width, height);
+
+      ctx.fillStyle = "#0f0";
+      ctx.font = fontSize + "px monospace";
+
+      drops.forEach((y, idx) => {
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        const x = idx * fontSize;
+        ctx.fillText(text, x, y * fontSize);
+        if (y * fontSize > height && Math.random() > 0.975) {
+          drops[idx] = 0;
+        }
+        drops[idx]++;
+      });
+    }
+
+    setInterval(draw, 50);
+
+    window.addEventListener("resize", () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>
